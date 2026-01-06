@@ -19,10 +19,12 @@ A battery-powered automatic pet feeder using Arduino components. This project pr
 - SG90 Servo Motor
 - 16x2 LCD Display
 - 3x Push Buttons
-- Battery holder for chosen abatteries
+- Battery holder for chosen batteries
 - Voltage regulator
 - Wires
 - Breadboard or PCB for assembly
+- USBC Charging Circuit (see other project)
+- Rechargeable batteries
 
 ### Mechanical Parts
 - Food container
