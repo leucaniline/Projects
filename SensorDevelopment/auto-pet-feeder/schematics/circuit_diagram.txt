@@ -1,0 +1,31 @@
+Circuit Diagram (ASCII art representation)
+
+Power Supply:
+2x AA Batteries (3V) --> 5V Voltage Regulator --> Arduino VIN
+
+                                    Arduino
+                                ┌──────────┐
+                ┌──────────────►│D2  (SET) │
+                │   ┌──────────►│D3  (UP)  │
+                │   │   ┌──────►│D4  (DOWN)│
+      Buttons   │   │   │       │          │
+      ┌─────┐   │   │   │       │          │           LCD Display
+      │ SET ├───┘   │   │       │ D12 ─────┼────────► RS
+      │ UP  ├───────┘   │       │ D11 ─────┼────────► EN
+      │ DOWN├───────────┘       │ D5  ─────┼────────► D4
+      └─────┘                   │ D4  ─────┼────────► D5
+                                │ D3  ─────┼────────► D6
+                                │ D2  ─────┼────────► D7
+                                │          │
+Servo          ┌───────────────►│D9        │
+Motor          │                │          │
+┌─────┐        │                │          │
+│ SG90├────────┘                │          │
+└─────┘                         └──────────┘
+
+Notes:
+- All buttons use internal pull-up resistors
+- LCD operates in 4-bit mode
+- Servo power can be taken from Arduino's 5V output for prototyping
+- For final version, consider separate power regulation for servo
+- Add 100µF capacitor across power supply for stability

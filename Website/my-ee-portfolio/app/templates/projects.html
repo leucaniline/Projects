@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>joshclen.nl - Engineering Projects</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    {% include 'base.html' %}
+    <main style="margin-top: 140px; padding: 20px;">
+
+        {% set sorted_projects = projects|sort(attribute='date', reverse=True) %}
+        <div id="projects-list" style="display: flex; flex-direction: column; gap: 24px;">
+            {% if sorted_projects %}
+            {% for project in sorted_projects %}
+            <div class="project-card" style="border: 1px solid #ccc; border-radius: 16px; padding: 24px; background: #fafbfc; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+            <h3 class="project-title" onclick="toggleProject('{{ loop.index0 }}')" style="cursor: pointer; margin: 0;">
+            {{ project.title }}
+            </h3>
+                <span style="background: #e0e7ff; color: #3730a3; font-size: 0.85em; border-radius: 8px; padding: 4px 12px; margin-left: 16px; cursor: pointer; align-self: flex-start;"
+                    onclick="toggleProject('{{ loop.index0 }}')">
+                    Click to expand
+                </span>
+            </div>
+            {% if project.date %}
+            <div class="project-date" style="color: #6b7280; font-size: 0.95em; margin-top: 4px; margin-bottom: 0;">
+            {{ project.date }}
+            </div>
+            {% endif %}
+            <p class="project-description" style="margin-top: 12px;">{{ project.description }}</p>
+            <div class="project-details" id="project-details-{{ loop.index0 }}" style="display: none; margin-top: 16px;">
+            {% if project.content_html %}
+            <div class="project-essay" style="background: #f3f4f6; border-radius: 8px; padding: 16px;">
+                {{ project.content_html|safe }}
+            </div>
+            {% else %}
+            <pre style="background: #e6e6e6; border-radius: 8px; padding: 12px;">{{ project.content }}</pre>
+            {% endif %}
+            </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No projects to display.</p>
+            {% endif %}
+        </div>
+        <script>
+            function toggleProject(idx) {
+            const details = document.getElementById('project-details-' + idx);
+            if (details.style.display === 'none' || details.style.display === '') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+            }
+            }
+        </script>
+
+        
+    </main>
+</body>
+
+</html>

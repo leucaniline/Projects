@@ -1,0 +1,3 @@
+twitchio
+irc
+requests

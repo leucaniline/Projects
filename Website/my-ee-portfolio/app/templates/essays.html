@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>joshclen.nl - Writing Projects</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    {% include 'base.html' %}
+    <main style="margin-top: 140px; padding: 20px;">
+
+    <div id="essays-list" style="display: flex; flex-direction: column; gap: 24px;">
+        {% if essays %}
+        {% set sorted_essays = essays|sort(attribute='date', reverse=True) %}
+        {% for essay in sorted_essays %}
+        <div class="essay-card" style="border: 1px solid #ccc; border-radius: 16px; padding: 24px; background: #fafbfc; box-shadow: 0 2px 8px rgba(0,0,0,0.04);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                <div style="flex: 1;">
+                    <h3 class="essay-title" onclick="toggleEssay('{{ loop.index0 }}')" style="cursor: pointer; margin: 0;">
+                        {{ essay.title }}
+                    </h3>
+                    {% if essay.date %}
+                    <span style="margin-top: 4px; display: block; color: #555;">{{ essay.date }}</span>
+                    {% endif %}
+                </div>
+                <span style="background: #e0e7ff; color: #3730a3; font-size: 0.85em; border-radius: 8px; padding: 4px 12px; margin-left: 16px; cursor: pointer; align-self: flex-start;"
+                    onclick="toggleEssay('{{ loop.index0 }}')">
+                    Click to expand
+                </span>
+            </div>
+            {% if essay.introduction %}
+            <p class="essay-description" style="margin-top: 12px;">{{ essay.introduction }}</p>
+            {% endif %}
+            <div class="essay-details" id="essay-details-{{ loop.index0 }}" style="display: none; margin-top: 16px;">
+                {% if essay.main_content %}
+                <h4>Main Content</h4>
+                <p class="essay-content">{{ essay.main_content }}</p>
+                {% endif %}
+                {% if essay.conclusion %}
+                <h4>Conclusion</h4>
+                <p class="essay-conclusion">{{ essay.conclusion }}</p>
+                {% endif %}
+                {% if not essay.main_content and not essay.conclusion %}
+                <pre style="background: #f3f4f6; border-radius: 8px; padding: 12px;">No main content or conclusion found.</pre>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No essays to display.</p>
+        {% endif %}
+    </div>
+    
+    <script>
+        function toggleEssay(idx) {
+            const details = document.getElementById('essay-details-' + idx);
+            if (details.style.display === 'none' || details.style.display === '') {
+                details.style.display = 'block';
+            } else {
+                details.style.display = 'none';
+            }
+        }
+    </script>
+
+    </main>
+</body>
+
+</html>
